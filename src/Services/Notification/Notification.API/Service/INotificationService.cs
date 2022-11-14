@@ -8,6 +8,8 @@ namespace Notification.API.Service
 {
     public interface INotificationService
     {
-        public Task<List<NotificationCustomer>> GetAllCustomerNotifications();
+        public Task<List<NotificationCustomer>> GetAllCustomerNotificationsAsync();
+
+        public Task<NotificationCustomer> SaveCustomerNotificationAsync(NotificationCustomer notificationCustomer);
     }
 }

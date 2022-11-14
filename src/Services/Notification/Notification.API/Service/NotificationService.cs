@@ -18,11 +18,18 @@ namespace Notification.API.Service
             _logger = logger;
         }
 
-        public async Task<List<NotificationCustomer>> GetAllCustomerNotifications()
+        public async Task<List<NotificationCustomer>> GetAllCustomerNotificationsAsync()
         {
             var responseList = await _customerNotificationRepository.GetAllAsync();
             _logger.LogInformation("{responseList.Count} notifications were fetched...",responseList.Count);
             return responseList.ToList();
+        }
+
+        public async Task<NotificationCustomer> SaveCustomerNotificationAsync(NotificationCustomer notificationCustomer)
+        {
+            var response = await _customerNotificationRepository.AddAsync(notificationCustomer);
+            _logger.LogInformation($"{notificationCustomer.Name} was added");
+            return response;
         }
     }
 }
