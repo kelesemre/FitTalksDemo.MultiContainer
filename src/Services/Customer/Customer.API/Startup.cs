@@ -1,6 +1,7 @@
 using Customer.API.Data;
 using Customer.API.Repositories;
 using HealthChecks.UI.Client;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -36,6 +37,14 @@ namespace Customer.API
                     .AddMongoDb(Configuration["DatabaseSettings:ConnectionString"],
                                                 "Customer DB Health Check",
                                                 HealthStatus.Degraded);
+            // MassTransit-RabbitMQ Configuration
+            services.AddMassTransit(config => {
+                config.UsingRabbitMq((ctx, cfg) => {
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+                    cfg.UseHealthCheck(ctx);
+                });
+            });
+            services.AddMassTransitHostedService();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

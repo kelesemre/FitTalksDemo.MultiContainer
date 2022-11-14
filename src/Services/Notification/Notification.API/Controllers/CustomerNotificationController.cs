@@ -22,7 +22,7 @@ namespace Notification.API.Controllers
         [Route("[action]", Name = "GetAllCustomerNotificationsAsync")]
         public async Task<IActionResult> GetAllCustomerNotificationsAsync()
         {
-            var response = await _notificationService.GetAllCustomerNotifications();
+            var response = await _notificationService.GetAllCustomerNotificationsAsync();
             return CreateActionResultInstance(GenericResponse<List<NotificationCustomer>>.Success(response));
         }
     }

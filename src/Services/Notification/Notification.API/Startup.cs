@@ -1,9 +1,12 @@
+using EventBus.Messages.Common;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Notification.API.EventBusConsumer;
 using Notification.API.Infrastructure.Extentions;
 
 namespace Notification.API
@@ -26,6 +29,18 @@ namespace Notification.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Notification.API", Version = "v1" });
             });
+            // MassTransit-RabbitMQ Configuration
+            services.AddMassTransit(config => {
+                config.AddConsumer<CustomerCreationEventConsumer>();
+                config.UsingRabbitMq((ctx, cfg) => {
+                    cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+                    cfg.UseHealthCheck(ctx);
+                    cfg.ReceiveEndpoint(EventBusConstants.CustomerNotifyingQueue, c => {
+                        c.ConfigureConsumer<CustomerCreationEventConsumer>(ctx);
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
