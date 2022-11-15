@@ -8,6 +8,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Notification.API.EventBusConsumer;
 using Notification.API.Infrastructure.Extentions;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System;
 
 namespace Notification.API
 {
@@ -29,6 +33,8 @@ namespace Notification.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Notification.API", Version = "v1" });
             });
+            services.AddHealthChecks()
+                    .AddUrlGroup(new Uri($"{Configuration["WebStatusSettings:NotificationUrl"]}/swagger/index.html"), "Notification.API", HealthStatus.Degraded);
             // MassTransit-RabbitMQ Configuration
             services.AddMassTransit(config => {
                 config.AddConsumer<CustomerCreationEventConsumer>();
@@ -60,6 +66,11 @@ namespace Notification.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
             });
         }
     }

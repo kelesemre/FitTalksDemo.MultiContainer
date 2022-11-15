@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.Messages", "Buildi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notification.API", "Services\Notification\Notification.API\Notification.API.csproj", "{75AFC623-0DBB-4794-A55E-72B575871352}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitTalksApiGateway", "ApiGateways\FitTalksApiGateway\FitTalksApiGateway.csproj", "{93A620D4-F672-4BBA-801F-B340EE20164A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitTalksApiGateway", "ApiGateways\FitTalksApiGateway\FitTalksApiGateway.csproj", "{93A620D4-F672-4BBA-801F-B340EE20164A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthWebStatus", "WebApps\HealthWebStatus\HealthWebStatus.csproj", "{3F30DDE0-CB62-47FB-9ECE-DAFD0388E30B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthWebStatus", "WebApps\HealthWebStatus\HealthWebStatus.csproj", "{3F30DDE0-CB62-47FB-9ECE-DAFD0388E30B}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{845C8C2D-4532-4EBF-892E-0A2A8FF631E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{3F30DDE0-CB62-47FB-9ECE-DAFD0388E30B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F30DDE0-CB62-47FB-9ECE-DAFD0388E30B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F30DDE0-CB62-47FB-9ECE-DAFD0388E30B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{845C8C2D-4532-4EBF-892E-0A2A8FF631E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{845C8C2D-4532-4EBF-892E-0A2A8FF631E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{845C8C2D-4532-4EBF-892E-0A2A8FF631E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{845C8C2D-4532-4EBF-892E-0A2A8FF631E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

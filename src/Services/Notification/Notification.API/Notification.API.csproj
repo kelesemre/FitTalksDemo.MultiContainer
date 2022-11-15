@@ -2,6 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..\..</DockerfileContext>
+		<DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -23,6 +26,8 @@
 		<PackageReference Include="MassTransit" Version="7.1.5" />
 		<PackageReference Include="MassTransit.AspNetCore" Version="7.1.5" />
 		<PackageReference Include="MassTransit.RabbitMQ" Version="7.1.5" />
+		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
+		<PackageReference Include="AspNetCore.HealthChecks.Uris" Version="6.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
