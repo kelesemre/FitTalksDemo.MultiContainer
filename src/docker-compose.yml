@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  fittalksapigateway:
+    image: ${DOCKER_REGISTRY-}fittalksapigateway
+    build:
+      context: .
+      dockerfile: ApiGateways/FitTalksApiGateway/Dockerfile
+
+  customer.api:
+    image: ${DOCKER_REGISTRY-}customerapi
+    build:
+      context: .
+      dockerfile: Services/Customer/Customer.API/Dockerfile
+
+
+  notification.api:
+    image: ${DOCKER_REGISTRY-}notificationapi
+    build:
+      context: .
+      dockerfile: Services/Notification/Notification.API/Dockerfile
+
+
+  healthwebstatus:
+    image: ${DOCKER_REGISTRY-}healthwebstatus
+    build:
+      context: .
+      dockerfile: WebApps/HealthWebStatus/Dockerfile
+

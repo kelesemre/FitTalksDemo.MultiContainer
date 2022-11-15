@@ -15,6 +15,7 @@ namespace Customer.API.Controllers
     {
         private readonly ICustomerRepository _repository;
         private readonly IPublishEndpoint _publishEndpoint;
+        // private readonly ISendEndpointProvider _sendEndpointProvider;
 
         public CustomerController(IPublishEndpoint publishEndpoint, ICustomerRepository repository)
         {
@@ -36,7 +37,8 @@ namespace Customer.API.Controllers
         {
             await _repository.CreateCustomer(customerEntity);
             var eventMessage = new CustomerCreationEvent { Email = customerEntity.Email, Name = customerEntity.Name, Surname = customerEntity.Surname };
-
+            //var sendEndPoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:create-order-service")); //MassTransit sending...
+            //await sendEndPoint.Send<CreateOrderMessageCommand>(createOrderMessageCommand); //sending a message to RMQ as a command type.
             await _publishEndpoint.Publish<CustomerCreationEvent>(eventMessage); // Publish to MessageBroker
 
             return Ok(customerEntity);
