@@ -1,24 +1,64 @@
 version: '3.4'
 
 services:
+  customerdb:
+    container_name: customerdb
+    restart: always
+    ports:
+        - "27017:27017"
+    volumes:
+        - mongo_data:/data/db
+
+  notificationdb:
+    container_name: notificationdb
+    environment:
+        SA_PASSWORD: "1234567Seven"
+        ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+        - "1433:1433"
+
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+
   fittalksapigateway:
+    container_name: fittalksapigateway
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+        - customer.api
+        - notification.api
     ports:
-      - "80"
+      - "7000:80"
 
   customer.api:
+    container_name: customer.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://customerdb:27017"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+      - customerdb
     ports:
-      - "80"
+      - "7010:80"
 
 
   notification.api:
+    container_name: notification.api
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_ENVIRONMENT=Development
+        - "ConnectionStrings:OrderingConnectionString=Server=notificationdb;Database=NotificationDb;User Id=sa;Password=123456Seven"
+        - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+        - "WebStatusSettings:NotificationUrl=http://notification.api"
+    depends_on:
+        - notificationdb
+        - rabbitmq
     ports:
-      - "80"
+        - "7020:80"
 
 
   healthwebstatus:
