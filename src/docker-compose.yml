@@ -1,6 +1,15 @@
 version: '3.4'
 
 services:
+  customerdb:
+    image: mongo
+
+  notificationdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
   fittalksapigateway:
     image: ${DOCKER_REGISTRY-}fittalksapigateway
     build:
@@ -27,3 +36,5 @@ services:
       context: .
       dockerfile: WebApps/HealthWebStatus/Dockerfile
 
+volumes:
+  mongo_data:
