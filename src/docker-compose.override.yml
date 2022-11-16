@@ -46,12 +46,11 @@ services:
     ports:
       - "7010:80"
 
-
   notification.api:
     container_name: notification.api
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
-        - "ConnectionStrings:OrderingConnectionString=Server=notificationdb;Database=NotificationDb;User Id=sa;Password=123456Seven"
+        - "ConnectionStrings:NotificationConnectionString=Server=notificationdb;Database=NotificationDb;User=sa;Password=123456Seven"
         - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
         - "WebStatusSettings:NotificationUrl=http://notification.api"
     depends_on:
@@ -60,10 +59,15 @@ services:
     ports:
         - "7020:80"
 
-
   healthwebstatus:
+    container_name: healthwebstatus
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - HealthChecksUI__HealthChecks__0__Name=Customer Health Check
+      - HealthChecksUI__HealthChecks__0__Uri=http://customer.api/hc
+      - HealthChecksUI__HealthChecks__1__Name=Notification Health Check
+      - HealthChecksUI__HealthChecks__1__Uri=http://notification.api/hc  
     ports:
-      - "80"
+      - "7007:80"
+
 
