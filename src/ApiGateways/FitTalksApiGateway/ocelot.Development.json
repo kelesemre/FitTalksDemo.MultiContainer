@@ -5,8 +5,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5010"
+          "Host": "customer.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/services/customer/{everything}",
@@ -19,8 +19,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": "5020"
+          "Host": "notification.api",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/services/notification/{everything}",
@@ -35,6 +35,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5555"
+    "BaseUrl": "http://fittalksapigateway"
   }
 }

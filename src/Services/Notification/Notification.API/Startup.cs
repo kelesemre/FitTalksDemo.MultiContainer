@@ -12,6 +12,7 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System;
+using Notification.API.Data;
 
 namespace Notification.API
 {
@@ -47,6 +48,8 @@ namespace Notification.API
                 });
             });
             services.AddMassTransitHostedService();
+            services.AddHealthChecks()
+                .AddDbContextCheck<NotificationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

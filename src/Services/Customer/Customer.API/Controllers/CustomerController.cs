@@ -25,6 +25,7 @@ namespace Customer.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<CustomerEntity>), (int)HttpStatusCode.OK)]
+        [Route("[action]", Name = "GetCustomerList")]
         public async Task<ActionResult<IEnumerable<CustomerEntity>>> GetCustomerList()
         {
             var products = await _repository.GetCustomerList();
@@ -33,6 +34,7 @@ namespace Customer.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(CustomerEntity), (int)HttpStatusCode.OK)]
+        [Route("[action]", Name = "CreateProduct")]
         public async Task<ActionResult<CustomerEntity>> CreateProduct([FromBody] CustomerEntity customerEntity)
         {
             await _repository.CreateCustomer(customerEntity);
