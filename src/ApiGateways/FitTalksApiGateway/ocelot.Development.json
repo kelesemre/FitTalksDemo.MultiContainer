@@ -35,6 +35,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://fittalksapigateway"
+    "BaseUrl": "http://fittalksapigateway" // todo
   }
 }

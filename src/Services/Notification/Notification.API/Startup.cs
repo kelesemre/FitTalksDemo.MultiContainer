@@ -1,18 +1,18 @@
 using EventBus.Messages.Common;
+using HealthChecks.UI.Client;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Notification.API.Data;
 using Notification.API.EventBusConsumer;
 using Notification.API.Infrastructure.Extentions;
-using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System;
-using Notification.API.Data;
 
 namespace Notification.API
 {

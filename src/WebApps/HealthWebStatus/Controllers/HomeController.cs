@@ -16,7 +16,8 @@ namespace HealthWebStatus.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return Redirect("/healthchecks-ui"); // predefine url
+            //return View();
         }
 
         public IActionResult Privacy()

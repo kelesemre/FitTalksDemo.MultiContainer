@@ -15,7 +15,7 @@ namespace Customer.API.Controllers
     {
         private readonly ICustomerRepository _repository;
         private readonly IPublishEndpoint _publishEndpoint;
-        // private readonly ISendEndpointProvider _sendEndpointProvider;
+        // private readonly ISendEndpointProvider _sendEndpointProvider; // todo check this out
 
         public CustomerController(IPublishEndpoint publishEndpoint, ICustomerRepository repository)
         {
