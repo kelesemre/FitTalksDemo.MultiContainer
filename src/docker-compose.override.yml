@@ -12,7 +12,7 @@ services:
   notificationdb:
     container_name: notificationdb
     environment:
-        SA_PASSWORD: "1234567Seven"
+        SA_PASSWORD: "123456Seven"
         ACCEPT_EULA: "Y"
     restart: always
     ports:
@@ -50,9 +50,9 @@ services:
     container_name: notification.api
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
-        - "ConnectionStrings:NotificationConnectionString=Server=notificationdb;Database=NotificationDb;User=sa;Password=123456Seven"
-        - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
-        - "WebStatusSettings:NotificationUrl=http://notification.api"
+        - ConnectionStrings:NotificationConnectionString=Server=notificationdb;Database=NotificationDb;User Id=sa;Password=123456Seven
+        - EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672
+        - WebStatusSettings:NotificationUrl=http://notification.api
     depends_on:
         - notificationdb
         - rabbitmq
