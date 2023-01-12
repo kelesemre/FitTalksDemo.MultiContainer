@@ -34,8 +34,8 @@ namespace Customer.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(CustomerEntity), (int)HttpStatusCode.OK)]
-        [Route("[action]", Name = "CreateProduct")]
-        public async Task<ActionResult<CustomerEntity>> CreateProduct([FromBody] CustomerEntity customerEntity)
+        [Route("[action]", Name = "CreateCustomer")]
+        public async Task<ActionResult<CustomerEntity>> CreateCustomer([FromBody] CustomerEntity customerEntity)
         {
             await _repository.CreateCustomer(customerEntity);
             var eventMessage = new CustomerCreationEvent { Email = customerEntity.Email, Name = customerEntity.Name, Surname = customerEntity.Surname };
