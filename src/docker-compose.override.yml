@@ -1,16 +1,16 @@
 version: '3.4'
 
 services:
-  customerdb:
-    container_name: customerdb
+  customer-db:
+    container_name: customer-db
     restart: always
     ports:
         - "27017:27017"
     volumes:
         - mongo_data:/data/db
 
-  notificationdb:
-    container_name: notificationdb
+  notification-db:
+    container_name: notification-db
     environment:
         SA_PASSWORD: "123456Seven"
         ACCEPT_EULA: "Y"
@@ -25,49 +25,56 @@ services:
         - "5672:5672"
         - "15672:15672"
 
-  fittalksapigateway:
-    container_name: fittalksapigateway
+  fittalks-apigateway:
+    container_name: fittalks-apigateway
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
-        - customer.api
-        - notification.api
+        - customer-api
+        - notification-api
     ports:
       - "7000:80"
 
-  customer.api:
-    container_name: customer.api
+  customer-api:
+    container_name: customer-api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseSettings:ConnectionString=mongodb://customerdb:27017"
+      - "DatabaseSettings:ConnectionString=mongodb://customer-db:27017"
       - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
-      - customerdb
+      - customer-db
     ports:
       - "7010:80"
 
-  notification.api:
-    container_name: notification.api
+  notification-api:
+    container_name: notification-api
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
-        - ConnectionStrings:NotificationConnectionString=Server=notificationdb;Database=NotificationDb;User Id=sa;Password=123456Seven
+        - ConnectionStrings:NotificationConnectionString=Server=notification-db;Database=NotificationDb;User Id=sa;Password=123456Seven
         - EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672
-        - WebStatusSettings:NotificationUrl=http://notification.api
+        - WebStatusSettings:NotificationUrl=http://notification-api
     depends_on:
-        - notificationdb
+        - notification-db
         - rabbitmq
     ports:
         - "7020:80"
 
-  healthwebstatus:
-    container_name: healthwebstatus
+  health-webstatus:
+    container_name: health-webstatus
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - HealthChecksUI__HealthChecks__0__Name=Customer Health Check
-      - HealthChecksUI__HealthChecks__0__Uri=http://customer.api/hc
+      - HealthChecksUI__HealthChecks__0__Uri=http://customer-api/hc
       - HealthChecksUI__HealthChecks__1__Name=Notification Health Check
-      - HealthChecksUI__HealthChecks__1__Uri=http://notification.api/hc  
+      - HealthChecksUI__HealthChecks__1__Uri=http://notification-api/hc  
     ports:
       - "7007:80"
 
 
+
+# Looking at the WebHost.cs file on Github (Open Source is great!) we can see that the order the providers are configured is as follows.
+# appsettings.json file
+# appsettings.{env.EnvironmentName}.json file
+# The local User Secrets File #Only in local development environment
+# Environment Variables
+# Command Line Arguments

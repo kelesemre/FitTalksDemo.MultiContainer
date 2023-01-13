@@ -5,7 +5,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "customer.api",
+          "Host": "customer-api",
           "Port": 80
         }
       ],
@@ -19,7 +19,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "notification.api",
+          "Host": "notification-api",
           "Port": 80
         }
       ],
@@ -35,6 +35,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://fittalksapigateway" // todo
+    "BaseUrl": "http://fittalks-apigateway"
   }
 }

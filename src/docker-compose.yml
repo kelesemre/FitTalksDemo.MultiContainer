@@ -1,37 +1,37 @@
 version: '3.4'
 
 services:
-  customerdb:
+  customer-db:
     image: mongo
 
-  notificationdb:
+  notification-db:
     image: mcr.microsoft.com/mssql/server:2017-latest
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
 
-  fittalksapigateway:
-    image: ${DOCKER_REGISTRY-}fittalksapigateway
+  fittalks-apigateway:
+    image: ${DOCKER_REGISTRY-}fittalks-apigateway
     build:
       context: .
       dockerfile: ApiGateways/FitTalksApiGateway/Dockerfile
 
-  customer.api:
-    image: ${DOCKER_REGISTRY-}customerapi
+  customer-api:
+    image: ${DOCKER_REGISTRY-}customer-api
     build:
       context: .
       dockerfile: Services/Customer/Customer.API/Dockerfile
 
 
-  notification.api:
-    image: ${DOCKER_REGISTRY-}notificationapi
+  notification-api:
+    image: ${DOCKER_REGISTRY-}notification-api
     build:
       context: .
       dockerfile: Services/Notification/Notification.API/Dockerfile
 
 
-  healthwebstatus:
-    image: ${DOCKER_REGISTRY-}healthwebstatus
+  health-webstatus:
+    image: ${DOCKER_REGISTRY-}health-webstatus
     build:
       context: .
       dockerfile: WebApps/HealthWebStatus/Dockerfile
