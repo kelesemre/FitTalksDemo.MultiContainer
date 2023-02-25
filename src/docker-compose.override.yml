@@ -1,16 +1,16 @@
 version: '3.4'
 
 services:
-  customer-db:
-    container_name: customer-db
+  customer-microdb:
+    container_name: customer-microdb
     restart: always
     ports:
         - "27017:27017"
     volumes:
         - mongo_data:/data/db
 
-  notification-db:
-    container_name: notification-db
+  notification-microdb:
+    container_name: notification-microdb
     environment:
         SA_PASSWORD: "123456Seven"
         ACCEPT_EULA: "Y"
@@ -39,10 +39,10 @@ services:
     container_name: customer-api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseSettings:ConnectionString=mongodb://customer-db:27017"
+      - "DatabaseSettings:ConnectionString=mongodb://customer-microdb:27017"
       - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
-      - customer-db
+      - customer-microdb
     ports:
       - "7010:80"
 
@@ -50,11 +50,11 @@ services:
     container_name: notification-api
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
-        - ConnectionStrings:NotificationConnectionString=Server=notification-db;Database=NotificationDb;User Id=sa;Password=123456Seven
+        - ConnectionStrings:NotificationConnectionString=Server=notification-microdb;Database=NotificationDb;User Id=sa;Password=123456Seven
         - EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672
         - WebStatusSettings:NotificationUrl=http://notification-api
     depends_on:
-        - notification-db
+        - notification-microdb
         - rabbitmq
     ports:
         - "7020:80"
@@ -72,9 +72,3 @@ services:
 
 
 
-# Looking at the WebHost.cs file on Github (Open Source is great!) we can see that the order the providers are configured is as follows.
-# appsettings.json file
-# appsettings.{env.EnvironmentName}.json file
-# The local User Secrets File #Only in local development environment
-# Environment Variables
-# Command Line Arguments

@@ -1,10 +1,10 @@
 version: '3.4'
 
 services:
-  customer-db:
+  customer-microdb:
     image: mongo
 
-  notification-db:
+  notification-microdb:
     image: mcr.microsoft.com/mssql/server:2017-latest
 
   rabbitmq:
